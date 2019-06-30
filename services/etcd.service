@@ -1,0 +1,34 @@
+[Unit]
+Description=Etcd Server
+After=network.target
+After=network-online.target
+Wants=network-online.target
+Documentation=https://github.com/coreos
+
+[Service]
+Type=notify
+WorkingDirectory=/var/lib/etcd/
+ExecStart=/opt/kubernetes/bin/etcd \
+  --data-dir=/var/lib/etcd \
+  --name={{NODE_NAME}} \
+  --cert-file=/etc/kubernetes/pki/etcd.pem \
+  --key-file=/etc/kubernetes/pki/etcd-key.pem \
+  --trusted-ca-file=/etc/kubernetes/pki/ca.pem \
+  --peer-cert-file=/etc/kubernetes/pki/etcd.pem \
+  --peer-key-file=/etc/kubernetes/pki/etcd-key.pem \
+  --peer-trusted-ca-file=/etc/kubernetes/pki/ca.pem \
+  --peer-client-cert-auth \
+  --client-cert-auth \
+  --listen-peer-urls=https://{{NODE_IP}}:2380 \
+  --initial-advertise-peer-urls=https://{{NODE_IP}}:2380 \
+  --listen-client-urls=https://{{NODE_IP}}:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls=https://{{NODE_IP}}:2379 \
+  --initial-cluster-token=etcd-cluster-0 \
+  --initial-cluster={{MASTER_0_HOSTNAME}}=https://{{MASTER_0_IP}}:2380,{{MASTER_1_HOSTNAME}}=https://{{MASTER_1_IP}}:2380,{{MASTER_2_HOSTNAME}}=https://{{MASTER_2_IP}}:2380 \
+  --initial-cluster-state=new
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

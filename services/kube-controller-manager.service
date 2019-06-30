@@ -1,0 +1,36 @@
+[Unit]
+Description=Kubernetes Controller Manager
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+
+[Service]
+ExecStart=/opt/kubernetes/bin/kube-controller-manager \
+  --port=0 \
+  --secure-port=10252 \
+  --bind-address=127.0.0.1 \
+  --kubeconfig=/etc/kubernetes/controller-manager.kubeconfig \
+  --service-cluster-ip-range={{SERVICE_CIDR}} \
+  --cluster-name=kubernetes \
+  --cluster-signing-cert-file=/etc/kubernetes/pki/ca.pem \
+  --cluster-signing-key-file=/etc/kubernetes/pki/ca-key.pem \
+  --allocate-node-cidrs=true \
+  --cluster-cidr={{POD_CIDR}} \
+  --experimental-cluster-signing-duration=8760h \
+  --root-ca-file=/etc/kubernetes/pki/ca.pem \
+  --service-account-private-key-file=/etc/kubernetes/pki/ca-key.pem \
+  --leader-elect=true \
+  --feature-gates=RotateKubeletServerCertificate=true \
+  --controllers=*,bootstrapsigner,tokencleaner \
+  --horizontal-pod-autoscaler-use-rest-clients=true \
+  --horizontal-pod-autoscaler-sync-period=10s \
+  --tls-cert-file=/etc/kubernetes/pki/controller-manager.pem \
+  --tls-private-key-file=/etc/kubernetes/pki/controller-manager-key.pem \
+  --use-service-account-credentials=true \
+  --alsologtostderr=true \
+  --logtostderr=false \
+  --log-dir=/var/log/kubernetes \
+  --v=2
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
