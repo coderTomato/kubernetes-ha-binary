@@ -16,7 +16,7 @@
 #### [三、集群可用性测试][3]
 #### [四、部署dashboard][4]
 
-[1]:https://git.imooc.com/coding-335/kubernetes-ha-binary/src/master/docs/1-prepare.md
-[2]:https://git.imooc.com/coding-335/kubernetes-ha-binary/src/master/docs/2-ha-deploy.md
-[3]:https://git.imooc.com/coding-335/kubernetes-ha-binary/src/master/docs/3-test.md
-[4]:https://git.imooc.com/coding-335/kubernetes-ha-binary/src/master/docs/4-dashboard.md
+[1]:https://github.com/coderTomato/kubernetes-ha-binary/blob/master/docs/1-prepare.md
+[2]:https://github.com/coderTomato/kubernetes-ha-binary/blob/master/docs/2-ha-deploy.md
+[3]:https://github.com/coderTomato/kubernetes-ha-binary/blob/master/docs/3-test.md
+[4]:https://github.com/coderTomato/kubernetes-ha-binary/blob/master/docs/4-dashboard.md
